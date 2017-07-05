@@ -7,17 +7,19 @@ import math
 
 
 # importing the libraries for workbook
-from openpyxl import Workbook
-from openpyxl import load_workbook
+# from openpyxl import Workbook
+# from openpyxl import load_workbook
 
-# Setting up the workbook
-wb = Workbook()
-ws = wb.create_sheet('Sheet',0)
-wb.save('S6.xlsx')
+# # Setting up the workbook
+# wb = Workbook()
+# ws = wb.create_sheet('Sheet',0)
+# wb.save('S6.xlsx')
 
-# Declaring global variables
-r = 1
-c = 1
+# # Declaring global variables
+# r = 1
+# c = 1
+
+values = []
 # Getting the image name from the user
 na_img = raw_input("Enter the name of the image: ")
 # Reading the image
@@ -40,6 +42,34 @@ def brightness(na_img):
 	print "The average luminance of the image is: "+ str(svep/(a*b))
 
 # function to get the perceived brightness as per CIE 1931 XYZ color space
+# def per_bright(na_img):
+# 	sperb = 0
+# 	# Traversing through all the pixels
+# 	for x in range(1,a):
+# 		for y in range(1,b):
+# 			# Getting the RGB values of each pixels
+# 			R,G,B = img.getpixel((x,y))
+# 			perb = (0.2126*R)+(0.7152*G)+(0.0722*B)/3
+# 			wb1 = load_workbook("S6.xlsx")
+# 			ws = wb1.get_sheet_by_name('Sheet')
+# 			ws.cell(row = x, column = y).value = perb
+# 			sperb += perb
+# 			wb1.save("data.xlsx")
+# 			print "Done: "+str(x)+"x"+str(y)
+# 	print "The average perceived luminance is: "+ str(sperb/(a*b))
+
+
+
+# function to get the hsv value of each pixel
+def hsv_color(na_img):
+	for x in range(0,a):
+		for y in range(0,b):
+			# Getting the RGB values of each pixels
+			R,G,B = img.getpixel((x,y))
+			print colorsys.rgb_to_hsv(R,G,B)
+
+# This is the reloaded function for solving data saving issues
+# function to get the perceived brightness as per CIE 1931 XYZ color space
 def per_bright(na_img):
 	sperb = 0
 	# Traversing through all the pixels
@@ -48,20 +78,11 @@ def per_bright(na_img):
 			# Getting the RGB values of each pixels
 			R,G,B = img.getpixel((x,y))
 			perb = (0.2126*R)+(0.7152*G)+(0.0722*B)/3
-			wb1 = load_workbook("S6.xlsx")
-			ws = wb1.get_sheet_by_name('Sheet')
-			ws.cell(row = x, column = y).value = perb
 			sperb += perb
-			wb1.save("data.xlsx")
-			print "Done: "+str(x)+"x"+str(y)
+			values.append(perb) 
+			# print "Done: "+str(x)+"x"+str(y)
 	print "The average perceived luminance is: "+ str(sperb/(a*b))
-# function to get the hsv value of each pixel
-def hsv_color(na_img):
-	for x in range(0,a):
-		for y in range(0,b):
-			# Getting the RGB values of each pixels
-			R,G,B = img.getpixel((x,y))
-			print colorsys.rgb_to_hsv(R,G,B)
+
 
 # function to get the hsv value of each pixel
 def hsl_color(na_img):
@@ -146,11 +167,13 @@ def main() :
 	print "The resolution of the loaded image is: "+str(a)+"x"+str(b)
 	# brightness(na_img)
 	per_bright(na_img)
-	print "Done with the workbook"
+	# print "Done with the workbook"
 	# hsv_color(na_img)
 	# hsl_color(na_img)
 	# hue_cal(na_img)
 	# conversion(na_img)
+	for item in values:
+		print item
 	return "End of process"
 
     
