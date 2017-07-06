@@ -4,7 +4,10 @@
 from PIL import Image
 import colorsys
 import math
-
+# In this program we will be creating a surface plot
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 # importing the libraries for workbook
 # from openpyxl import Workbook
@@ -172,9 +175,37 @@ def main() :
 	# hsl_color(na_img)
 	# hue_cal(na_img)
 	# conversion(na_img)
-	for item in values:
-		print item
-	return "End of process"
+
+	print "The length of the list is :"+str(len(values))
+	# for item in values:
+	# 	print item
+	# return "End of process"
+	# Adding up the values
+	X = list(range(a))
+	Y = list(range(b))
+
+	# x = [1,100,2]
+	# y = [1,100,2]
+	# Setting up the meshgrid with the X and Y values
+	X,Y = np.meshgrid(X,Y)
+
+	# Setting up the values of Z
+	Z = values[:1166399]
+
+	# Creating up the entire figure
+	fig = plt.figure()
+
+	# Creating a sub plot to plot the 3D projection
+	# adding up the features of subplot
+	sub = fig.add_subplot(1,1,1,projection = "3d")
+
+	# Setting up the subplot with values
+	sub.plot_surface(X,Y,Z)
+
+
+	# Displaying the plot
+	plt.show()
+
 
     
 # Calling the main function
