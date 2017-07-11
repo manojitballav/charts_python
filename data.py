@@ -9,6 +9,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+import xlsxwriter
+workbook = xlsxwriter.Workbook('/home/manojitballav/Documents/S6_2.xlsx')
+worksheet = workbook.add_worksheet()
+
+# import csv
+# cs = open('S6.csv','wb')
+# cs_file = csv.writer(cs,delimiter=',')
+
+
+
 # importing the libraries for workbook
 # from openpyxl import Workbook
 # from openpyxl import load_workbook
@@ -125,6 +135,42 @@ def hue_cal(na_img):
 	print "The max value of GREEN is:"+str(fg)
 	print "The max value of BLUE is:"+str(fb)
 
+
+def sav_bright(na_img):
+	row = 0
+	col = 0
+	sperb = 0
+	# Traversing through all the pixels
+	for x in range(1,a):
+		for y in range(1,b):
+			# Getting the RGB values of each pixels
+			R,G,B = img.getpixel((x,y))
+			perb = (0.2126*R)+(0.7152*G)+(0.0722*B)/3
+			worksheet.write(row,col,perb)
+			sperb += perb
+			values.append(perb)
+			col+=1
+		row+=1
+		col = 0
+			# print "Done: "+str(x)+"x"+str(y)
+	print "The average perceived luminance is: "+ str(sperb/(a*b))
+	workbook.close()
+
+def csv_bright(na_img):
+	sperb = 0
+	# Traversing through all the pixels
+	for x in range(1,a):
+		for y in range(1,b):
+			# Getting the RGB values of each pixels
+			R,G,B = img.getpixel((x,y))
+			perb = ((0.2126*R)+(0.7152*G)+(0.0722*B))/3
+			cs_file.writerow([perb])
+			sperb += perb
+			values.append(perb)
+			# print "Done: "+str(x)+"x"+str(y)
+	print "The average perceived luminance is: "+ str(sperb/(a*b))
+	cs.close()
+
 def conversion(na_img):
 	h = 0.00
 	for x in range(0,a):
@@ -169,38 +215,39 @@ def conversion(na_img):
 def main() :
 	print "The resolution of the loaded image is: "+str(a)+"x"+str(b)
 	# brightness(na_img)
-	per_bright(na_img)
+	# per_bright(na_img)
 	# print "Done with the workbook"
 	# hsv_color(na_img)
-	# hsl_color(na_img)
 	# hue_cal(na_img)
 	# conversion(na_img)
+	sav_bright(na_img)
+	# csv_bright(na_img)
 
 	print "The length of the list is :"+str(len(values))
 	# for item in values:
 	# 	print item
 	# return "End of process"
 	# Adding up the values
-	X = list(range(a))
-	Y = list(range(b))
+	# X = list(range(a))
+	# Y = list(range(b))
 
-	# x = [1,100,2]
-	# y = [1,100,2]
-	# Setting up the meshgrid with the X and Y values
-	X,Y = np.meshgrid(X,Y)
+	# # x = [1,100,2]
+	# # y = [1,100,2]
+	# # Setting up the meshgrid with the X and Y values
+	# X,Y = np.meshgrid(X,Y)
 
-	# Setting up the values of Z
-	Z = values[:1166399]
+	# # Setting up the values of Z
+	# Z = values[:1963969]
 
-	# Creating up the entire figure
-	fig = plt.figure()
+	# # Creating up the entire figure
+	# fig = plt.figure()
 
-	# Creating a sub plot to plot the 3D projection
-	# adding up the features of subplot
-	sub = fig.add_subplot(1,1,1,projection = "3d")
+	# # Creating a sub plot to plot the 3D projection
+	# # adding up the features of subplot
+	# sub = fig.add_subplot(1,1,1,projection = "3d")
 
-	# Setting up the subplot with values
-	sub.plot_surface(X,Y,Z)
+	# # Setting up the subplot with values
+	# sub.plot_surface(X,Y,Z)
 
 
 	# Displaying the plot
