@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 import xlsxwriter
-workbook = xlsxwriter.Workbook('/home/manojitballav/Documents/S6_2.xlsx')
+workbook = xlsxwriter.Workbook('/home/manojitballav/Documents/S6_2e.xlsx')
 worksheet = workbook.add_worksheet()
 
 # import csv
